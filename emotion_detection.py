@@ -1,4 +1,17 @@
+"""This module contains the emotion_detector function to detect emotions from a given text."""
+
+import requests
+
 def emotion_detector(text_to_analyze):
+    """
+    Detect emotions from the provided text using IBM Watson NLP service.
+
+    Parameters:
+    text_to_analyze (str): The input text for emotion analysis.
+
+    Returns:
+    dict: A dictionary with emotion scores and dominant emotion, or error message if input is invalid.
+    """
     if not text_to_analyze:
         return {
             'anger': None,
@@ -8,6 +21,7 @@ def emotion_detector(text_to_analyze):
             'sadness': None,
             'dominant_emotion': 'Invalid text! Please try again!'
         }
+
     try:
         url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
         headers = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
@@ -38,7 +52,7 @@ def emotion_detector(text_to_analyze):
             'dominant_emotion': dominant_emotion
         }
 
-    except Exception as e:
+    except Exception:
         return {
             'anger': None,
             'disgust': None,
